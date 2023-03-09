@@ -15,6 +15,14 @@ const fs = require('fs');
 require('dotenv').config();
 const app = express();
 
+app.listen(4000);
+app.use(cors(
+  {
+      origin: 'http://localhost:5173',
+      credentials: true,
+  }
+));
+
 const bcryptSalt = bcrypt.genSaltSync(10);
 const jwtSecret = process.env.secret;
 
@@ -23,12 +31,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use('/uploads', express.static(__dirname+'/uploads'));
-app.use(cors(
-    {
-        origin: 'http://localhost:5173',
-        credentials: true,
-    }
-));
+
 
 console.log('Server started');
 
@@ -43,14 +46,14 @@ function getUserDataFromReq(req) {
 });
 }
 
-mongoose.connect(process.env.MONGO_URL).then(()=>console.log("Backend Connected"));
+mongoose.connect(process.env.MONGO_URL).then(()=>console.log("Database Connected"));
 
 app.get('/api/test', (req,res) => {
-    // console.log("Server Connected");
   res.json('test ok');
 });
 
 app.post('/api/register', async (req,res) => {
+
   const {name,email,password} = req.body;
 
   try {
@@ -67,8 +70,7 @@ app.post('/api/register', async (req,res) => {
 });
 
 app.post('/api/login', async (req,res) => {
-  // console.log("inside login");
-  mongoose.connect(process.env.MONGO_URL);
+
   const {email,password} = req.body;
   const userDoc = await User.findOne({email});
   if (userDoc) {
@@ -92,7 +94,6 @@ app.post('/api/login', async (req,res) => {
 app.get('/api/profile', (req,res) => 
 {
 
-  mongoose.connect(process.env.MONGO_URL);
 
   const {token} = req.cookies;
   if (token) 
@@ -234,4 +235,3 @@ app.get('/api/bookings', async (req,res) => {
   res.json( await Booking.find({user:userData.id}).populate('place') );
 });
 
-app.listen(4000);
