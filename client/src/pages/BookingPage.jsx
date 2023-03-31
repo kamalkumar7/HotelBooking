@@ -4,6 +4,7 @@ import axios from "axios";
 import AddressLink from "../AddressLink";
 import PlaceGallery from "../PlaceGallery";
 import BookingDates from "../BookingDates";
+import StarRating from "./StarRating";
 
 export default function BookingPage() {
   const {id} = useParams();
@@ -38,6 +39,7 @@ export default function BookingPage() {
         </div>
       </div>
       <PlaceGallery place={booking.place} />
+      {/* <StarRating/> */}
     </div>
   );
 }

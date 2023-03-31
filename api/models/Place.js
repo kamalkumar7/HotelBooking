@@ -12,6 +12,9 @@ const placeSchema = new mongoose.Schema({
   checkOut: Number,
   maxGuests: Number,
   price: Number,
+  rating:{type:Number, default:0},
+  ratings: {type: [Number], default:[]},
+  reviewers: {type:[String],default:[]},
 });
 
 const PlaceModel = mongoose.model('Place', placeSchema);

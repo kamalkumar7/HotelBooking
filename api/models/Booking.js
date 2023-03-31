@@ -7,8 +7,13 @@ const bookingSchema = new mongoose.Schema({
   checkOut: {type:Date, required:true},
   name: {type:String, required:true},
   phone: {type:String, required:true},
+  rating:{type:Number, default:0},
+  ratings: {type: [Number], default:[]},
+  reviewers: {type:[String],default:[]},
   price: Number,
-});
+ 
+},
+{ timestamps: true });
 
 const BookingModel = mongoose.model('Booking', bookingSchema);
 

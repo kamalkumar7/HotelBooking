@@ -72,7 +72,6 @@ app.post('/api/register', async (req,res) => {
 });
 
 app.post('/api/gauth',async(req,res)=>{
-  console.log(req.body);
 
   res.status(422);
 
@@ -81,7 +80,6 @@ app.post('/api/gauth',async(req,res)=>{
   if (userDoc) 
   {
 
-    console.log("signin");
     const passOk = bcrypt.compareSync(password, userDoc.password);
     if (passOk) {
       jwt.sign({
@@ -89,7 +87,6 @@ app.post('/api/gauth',async(req,res)=>{
         id:userDoc._id
       }, jwtSecret, {}, (err,token) => {
         if (err) throw err;
-        console.log("signedin")
         res.cookie('token', token).status(200).json(userDoc);
       });
     } else {
@@ -99,7 +96,6 @@ app.post('/api/gauth',async(req,res)=>{
   
   else 
   {
-    console.log("signup");
 
     try {
       const userDoc = await User.create({
@@ -107,10 +103,8 @@ app.post('/api/gauth',async(req,res)=>{
         email,
         password:bcrypt.hashSync(password, bcryptSalt),
       });
-      console.log("signed up")
 
 
-      console.log("signin");
       const passOk = bcrypt.compareSync(password, userDoc.password);
       if (passOk) {
         jwt.sign({
@@ -118,7 +112,6 @@ app.post('/api/gauth',async(req,res)=>{
           id:userDoc._id
         }, jwtSecret, {}, (err,token) => {
           if (err) throw err;
-          console.log("signedin")
           res.cookie('token', token).status(200).json(userDoc);
         });
       } else {
@@ -186,6 +179,7 @@ app.post('/api/logout', (req,res) => {
 app.post('/api/upload-by-link', async (req,res) => {
   const {link} = req.body;
   console.log(link);
+
   const newName = 'photo' + Date.now() + '.jpg';
   await imageDownloader.image({
     url: link,
@@ -300,3 +294,15 @@ app.get('/api/bookings', async (req,res) => {
   res.json( await Booking.find({user:userData.id}).populate('place') );
 });
 
+
+// app.post('/api/rate', async(req,res)=>{
+//   mongoose.connect(process.env.MONGO_URL);
+//   const idd = "6426ef4c79739559dd837864";
+//   // const userData = await getUserDataFromReq(req);
+    
+//     const placeData= await Place.findByIdAndUpdate(idd, { rating: ratings.length+1 }, { new: true })
+//     // console.log( placeData);
+  
+//   res.json(placeData).status(200);
+  
+// })
