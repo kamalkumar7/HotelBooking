@@ -24,7 +24,7 @@ app.use(cors(
 ));
 
 const bcryptSalt = bcrypt.genSaltSync(10);
-const jwtSecret = process.env.secret;
+const jwtSecret = process.env.JWT;
 
 
 app.use(express.json());
@@ -38,7 +38,8 @@ console.log('Server started');
 mongoose.set('strictQuery', false);
 
 function getUserDataFromReq(req) {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve, reject) => 
+  {
     jwt.verify(req.cookies.token, jwtSecret, {}, async (err, userData) => {
       if (err) throw err;
       resolve(userData);
@@ -63,11 +64,75 @@ app.post('/api/register', async (req,res) => {
       password:bcrypt.hashSync(password, bcryptSalt),
     });
     res.json(userDoc);
-  } catch (e) {
+  } catch (e) 
+  {
     res.status(422).json(e);
   }
 
 });
+
+app.post('/api/gauth',async(req,res)=>{
+  console.log(req.body);
+
+  res.status(422);
+
+  const {name,email,password} = req.body;
+  const userDoc = await User.findOne({email});
+  if (userDoc) 
+  {
+
+    console.log("signin");
+    const passOk = bcrypt.compareSync(password, userDoc.password);
+    if (passOk) {
+      jwt.sign({
+        email:userDoc.email,
+        id:userDoc._id
+      }, jwtSecret, {}, (err,token) => {
+        if (err) throw err;
+        console.log("signedin")
+        res.cookie('token', token).status(200).json(userDoc);
+      });
+    } else {
+      res.status(422).json('pass not ok');
+    }
+  } 
+  
+  else 
+  {
+    console.log("signup");
+
+    try {
+      const userDoc = await User.create({
+        name,
+        email,
+        password:bcrypt.hashSync(password, bcryptSalt),
+      });
+      console.log("signed up")
+
+
+      console.log("signin");
+      const passOk = bcrypt.compareSync(password, userDoc.password);
+      if (passOk) {
+        jwt.sign({
+          email:userDoc.email,
+          id:userDoc._id
+        }, jwtSecret, {}, (err,token) => {
+          if (err) throw err;
+          console.log("signedin")
+          res.cookie('token', token).status(200).json(userDoc);
+        });
+      } else {
+        res.status(422).json('pass not ok');
+      }
+
+
+    } catch (e) 
+    {
+
+      res.status(422).json(e);
+    }
+  }
+})
 
 app.post('/api/login', async (req,res) => {
 
@@ -87,7 +152,7 @@ app.post('/api/login', async (req,res) => {
       res.status(422).json('pass not ok');
     }
   } else {
-    res.json('not found');
+    res.status(404).json('user not found');
   }
 });
 
