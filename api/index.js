@@ -45,7 +45,7 @@ app.use('/api/upload',uploadRoutes);
 
 app.use('/api/places',placesRoutes);
 
-app.use('/hi',()=>{
+app.get('/hi',()=>{
   console.log(process.env.JWT)
 })
 
