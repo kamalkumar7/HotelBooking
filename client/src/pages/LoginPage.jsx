@@ -99,7 +99,7 @@ export default function LoginPage() {
           </div>
           <h1 className="bold text-center"> Or</h1>
         </form>
-          <button className="primary " style={{backgroundColor:'#6495ED'}} onClick ={signInWithGoogle}>Login with Google</button>
+          <button className="primary " style={{backgroundColor:'#6495EF'}} onClick ={signInWithGoogle}>Login with Google</button>
       </div>
     </div>
   );
