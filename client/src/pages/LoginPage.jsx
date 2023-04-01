@@ -4,7 +4,7 @@ import axios from "axios";
 import { UserContext } from "../UserContext.jsx";
 import { useNavigate} from 'react-router-dom';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
-import { auth, provider } from "../firebase";
+import { auth, provider } from "../firebase.js";
 import { signInWithPopup } from "firebase/auth";
 
 
