@@ -24,7 +24,7 @@ export default function LoginPage() {
     ev.preventDefault();
     try {
 
-      const res = await axios.post('http://localhost:4000/api/login', { email, password });
+      const res = await axios.post('http://localhost:4000/api/auth/login', { email, password });
 
       if (res.status === 404) {
         window.alert("user not found");
@@ -45,7 +45,7 @@ export default function LoginPage() {
     signInWithPopup(auth, provider)
       .then((result) => {
         axios
-          .post("http://localhost:4000/api/gauth", {
+          .post("http://localhost:4000/api/auth/gauth", {
             name: result.user.displayName,
             email: result.user.email,
             password:'gauth'

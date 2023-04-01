@@ -14,7 +14,7 @@ export function UserContextProvider({children}) {
 
   useEffect(() => {
     if (!user) {
-      instance.get('api/profile').then(({data}) => {
+      instance.get('api/auth/profile').then(({data}) => {
         setUser(data);
         setReady(true);
       });

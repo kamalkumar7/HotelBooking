@@ -39,7 +39,7 @@ export default function BookingPage() {
         </div>
       </div>
       <PlaceGallery place={booking.place} />
-      {/* <StarRating/> */}
+
     </div>
   );
 }

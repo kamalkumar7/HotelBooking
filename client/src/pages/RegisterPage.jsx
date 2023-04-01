@@ -16,7 +16,7 @@ export default function RegisterPage() {
   async function registerUser(ev) {
     ev.preventDefault();
     try {
-      await instance.post('api/register', {
+      await instance.post('api/auth/register', {
         name,
         email,
         password,

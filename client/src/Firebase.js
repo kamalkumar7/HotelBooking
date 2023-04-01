@@ -5,7 +5,8 @@ import { getAuth, GoogleAuthProvider } from "firebase/auth";
 
 // dotenv.config();
 const firebaseConfig = {
-  apiKey: "AIzaSyANKJyT9kGXTYDpGYKvWIJCyaEfUjedTUU",
+
+  apiKey: 'AIzaSyANKJyT9kGXTYDpGYKvWIJCyaEfUjedTUU',
   authDomain: "ytclone-9dfc3.firebaseapp.com",
   projectId: "ytclone-9dfc3",
   storageBucket: "ytclone-9dfc3.appspot.com",

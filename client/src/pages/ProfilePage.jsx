@@ -13,11 +13,12 @@ export default function ProfilePage() {
     subpage = 'profile';
   }
 
+
   const instance = axios.create({
     baseURL: 'http://localhost:4000'
   });
   async function logout() {
-    await instance.post('api/logout');
+    await instance.post('api/auth/logout');
     setRedirect('/');
     setUser(null);
   }

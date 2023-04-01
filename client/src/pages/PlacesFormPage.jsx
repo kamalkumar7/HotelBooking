@@ -74,6 +74,11 @@ export default function PlacesFormPage() {
       setRedirect(true);
     }
 
+
+  }
+  const deletePlace = async()=>{
+    await axios.post(`http://localhost:4000/api/places/${id}`);
+    setRedirect(true);
   }
 
   if (redirect) {
@@ -89,7 +94,9 @@ export default function PlacesFormPage() {
         {preInput('Address', 'Address to this place')}
         <input type="text" value={address} onChange={ev => setAddress(ev.target.value)}placeholder="address"/>
         {preInput('Photos','more = better')}
+
         <PhotosUploader addedPhotos={addedPhotos} onChange={setAddedPhotos} />
+
         {preInput('Description','description of the place')}
         <textarea value={description} onChange={ev => setDescription(ev.target.value)} />
         {preInput('Perks','select all the perks of your place')}
@@ -127,6 +134,8 @@ export default function PlacesFormPage() {
         </div>
         <button className="primary my-4">Save</button>
       </form>
+      {id?<button className="primary my-4" onClick={deletePlace}>Delete This Place </button>:null }
+        
     </div>
   );
 }
