@@ -1,4 +1,4 @@
-# Hotel Booking MERN Site
+# Hotel Booking MERN Site (https://htle.vercel.app/)
 
 This is a hotel booking web application built using the MERN (MongoDB, Express.js, React, Node.js) stack. It allows users to search for available hotels, view their details and book a room.
 
